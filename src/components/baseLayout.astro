@@ -1,0 +1,25 @@
+---
+import { ClientRouter } from "astro:transitions"
+
+const { pageTitle } = Astro.props
+
+const companyName = "中國青年救國團"
+const title = (pageTitle === undefined || pageTitle == "" ? "" : pageTitle + " - ") + companyName
+---
+<!DOCTYPE html>
+<html lang="zh-tw">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <link href="css/normalize.css" rel="stylesheet">
+        <link href="css/global.css" rel="stylesheet">
+        <ClientRouter />
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>

@@ -1,0 +1,20 @@
+---
+const { title, image } = Astro.props
+---
+<style>
+article {
+    background-color: var(--card-bg-color); !important
+    color: var(--card-text-color); !important
+}
+
+img {
+    border-radius: var(--card-img-border-radius); !important
+}
+</style>
+<article>
+    <img >
+    <h1>{title}</h1>
+    <div>
+        <slot/>
+    </div>
+</article>

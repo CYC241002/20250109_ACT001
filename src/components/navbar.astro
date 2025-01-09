@@ -1,0 +1,201 @@
+---
+const { navItem } = Astro.props
+---
+<style>
+.nav {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--nav-bg-color);
+  opacity: var(--nav-bg-opacity);
+  position: fixed;
+  z-index: 25;
+  width: 100%;
+  top: 0;
+}
+
+.nav .logo img {
+  width: 180px;
+  height: auto;
+}
+
+.nav:has(#menuCheck:checked) {
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 0;
+}
+
+.nav:has(#menuCheck:checked) .logo {
+  width: 100%;
+  padding: 12px;
+}
+
+.nav .menu:has(#menuCheck:checked) {
+  width: 100%;
+}
+
+.nav .menu #menuCheck {
+  display: none;
+  visibility: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+
+.nav .menu .menu-checkbox-btn {
+  font-size: 32px;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  background: var(--button-back-color);
+  z-index: 30;
+  cursor: pointer;
+  top: 20px;
+  right: 20px;
+}
+
+.nav .menu .toggle .common {
+  position: absolute;
+  height: 2px;
+  width: 20px;
+  background: var(--button-text-color);
+  transition: 0.3s ease;
+}
+
+.toggle .top_line {
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle .middle_line {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toggle .bottom_line {
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#menuCheck:checked~.menu-checkbox-btn .toggle .top_line {
+  top: 14px;
+  left: 2px;
+  width: 25px;
+  transform: rotate(45deg);
+}
+
+#menuCheck:checked~.menu-checkbox-btn .toggle .middle_line {
+  top: 14px;
+  left: 2px;
+  width: 25px;
+  transform: rotate3d(0, 1, 0, 90deg);
+}
+
+#menuCheck:checked~.menu-checkbox-btn .toggle .bottom_line {
+  top: 14px;
+  left: 2px;
+  width: 25px;
+  transform: rotate(-45deg);
+}
+
+.nav .menu .menu-links {
+  display: none;
+  padding: 0;
+}
+
+.nav .menu #menuCheck:checked~.menu-links {
+  display: block;
+  width: 100%;
+}
+
+.nav .menu .menu-links .menu-link {
+  display: block;
+  text-align: center;
+}
+
+.nav .menu .menu-links .menu-link a {
+  color: var(--nav-text-color);
+  text-decoration: none;
+  padding: 2em 3em;
+  display: inline-block;
+  width: 100%;
+  transition: 0.2s ease;
+}
+
+.nav .menu .menu-links .menu-link a:hover {
+  color: var(--button-text-color);
+  background: var(--button-emphasis-color);
+  font-weight: bold;
+}
+
+@media(min-width: 768px) {
+  .nav {
+    z-index: 200;
+  }
+  
+    .nav .menu .menu-checkbox-btn {
+        display: none;
+    }
+  
+    .nav .menu .menu-links {
+        display: block;
+    }
+  
+    .nav .menu .menu-links .menu-link {
+        display: inline-block;
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+  
+    .nav .menu .menu-links .menu-link a {
+        position: relative;
+        padding: 0;
+    }
+  
+    .nav .menu .menu-links .menu-link a::before {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--button-emphasis-color);
+        transition: .3s;
+    }
+  
+    .nav .menu .menu-links .menu-link a:hover {
+        background: transparent;
+        color: var(--button-emphasis-color);
+    }
+  
+    .nav .menu .menu-links .menu-link a:hover::before {
+        width: 100%;
+    }
+}
+</style>
+<nav class="nav">
+    <div class="logo">
+        <a href="/"><img src="/img/logo.png"></a>
+    </div>
+    <div class="menu">
+      <input type="checkbox" id="menuCheck">
+        <label class="menu-checkbox-btn" for="menuCheck">
+            <!--<ion-icon name="menu-outline"></ion-icon>-->
+            <div class="toggle">
+                <span class="top_line common"></span>
+                <span class="middle_line common"></span>
+                <span class="bottom_line common"></span>
+            </div>
+        </label>
+        <ul class="menu-links">
+            {
+                navItem.map((item: { link: string | URL | null | undefined; title: unknown }) => <li class="menu-link"><a href={item.link}>{item.title}</a></li>)
+            }
+        </ul>
+    </div>
+</nav>
